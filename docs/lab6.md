@@ -38,3 +38,7 @@ User наследует ApplicationRecord, тот — ActiveRecord::Base. Имя
 Проверены дубликаты с другим регистром и уникальный индекс БД. Fixtures пустые: стандартные записи MyString нарушили бы индекс. Принудительное сохранение дубликата без валидаций вызывает RecordNotUnique.
 
 Тест нормализации с reload падает без callback и проходит с self.email = email.downcase, затем с email.downcase!. Финальный вариант — downcase!. Сохранена регистронезависимая валидация: возврат к uniqueness: true из листинга 6.32 пропускает mixed-case дубликат на этапе valid?, поскольку before_save вызывается позже. Это осознанное исправление примера, позволяющее получить ошибку модели до записи. Результаты: 6.2.5-*.txt.
+
+## 6.3.1–6.3.2. Хеш пароля
+
+Добавлены bcrypt, password_digest и has_secure_password. Пароль и подтверждение виртуальные, в БД только digest. При валидных name/email пользователь без пароля невалиден: Password can't be blank. Тестовые объекты дополнены password/password_confirmation. API: https://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html.
