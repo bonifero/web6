@@ -42,3 +42,7 @@ User наследует ApplicationRecord, тот — ActiveRecord::Base. Имя
 ## 6.3.1–6.3.2. Хеш пароля
 
 Добавлены bcrypt, password_digest и has_secure_password. Пароль и подтверждение виртуальные, в БД только digest. При валидных name/email пользователь без пароля невалиден: Password can't be blank. Тестовые объекты дополнены password/password_confirmation. API: https://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html.
+
+## 6.3.3. Требования к паролю
+
+Пробелы и пароль длиной 5 невалидны; 6 символов валидны. У короткого пароля ошибка Password is too short (minimum is 6 characters). Дополнительно проверены несовпадающее подтверждение и встроенный предел bcrypt 72 байта. Вывод: 6.3.3-errors.txt.
