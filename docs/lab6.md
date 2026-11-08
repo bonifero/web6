@@ -19,3 +19,7 @@ User наследует ApplicationRecord, тот — ActiveRecord::Base. Имя
 ## 6.2.2. Наличие значений
 
 Тесты сначала RED, затем GREEN. У пустого u ошибки Name can't be blank и Email can't be blank. u.errors.messages — Hash; ошибки email доступны через u.errors.messages[:email] или u.errors[:email]. Фактический вывод: 6.2.2-errors.txt.
+
+## 6.2.3. Длина
+
+51 символ имени и 256 символов email невалидны; пределы 50/255 валидны. Сообщения: Name is too long (maximum is 50 characters), Email is too long (maximum is 255 characters). Вывод: 6.2.3-errors.txt; RED/GREEN сохранены отдельно.
