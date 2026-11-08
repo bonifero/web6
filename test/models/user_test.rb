@@ -94,4 +94,25 @@ class UserTest < ActiveSupport::TestCase
     @user.password = @user.password_confirmation = "a" * 6
     assert @user.valid?
   end
+
+  test "authentication accepts only correct password" do
+    @user.save!
+    user = User.find(@user.id)
+    assert_equal user, user.authenticate("foobar")
+    assert_equal true, !!user.authenticate("foobar")
+    assert_equal false, user.authenticate("foobaz")
+    assert_equal false, user.authenticate("not_the_right_password")
+    assert_not_equal "foobar", user.password_digest
+    assert BCrypt::Password.new(user.password_digest).is_password?("foobar")
+  end
+
+  test "loaded user needs password to save but update_attribute bypasses validation" do
+    @user.save!
+    user = User.find(@user.id)
+    user.name = "New Name"
+    assert_not user.save
+    assert_includes user.errors[:password], "can't be blank"
+    assert user.update_attribute(:name, "Никита Сотников")
+    assert_equal "Никита Сотников", user.reload.name
+  end
 end
