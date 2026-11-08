@@ -48,4 +48,24 @@ class UserTest < ActiveSupport::TestCase
       assert_not @user.valid?, "#{address.inspect} should be invalid"
     end
   end
+
+  test "email addresses should be unique" do
+    duplicate_user = @user.dup
+    duplicate_user.email = @user.email.upcase
+    @user.save!
+    assert_not duplicate_user.valid?
+  end
+
+  test "email addresses should be saved as lowercase" do
+    mixed_case_email = "Foo@ExAMPle.CoM"
+    @user.email = mixed_case_email
+    @user.save!
+    assert_equal mixed_case_email.downcase, @user.reload.email
+  end
+
+  test "database rejects duplicate emails even without validations" do
+    @user.save!
+    duplicate_user = @user.dup
+    assert_raises(ActiveRecord::RecordNotUnique) { duplicate_user.save!(validate: false) }
+  end
 end
