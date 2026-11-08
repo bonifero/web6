@@ -15,3 +15,7 @@
 Упражнения выполнены script/lab6_basics.rb в транзакции с откатом (эквивалент sandbox). Вывод: [6.1-objects.txt](6.1-objects.txt).
 
 User наследует ApplicationRecord, тот — ActiveRecord::Base. Имя и email — String; timestamps — ActiveSupport::TimeWithZone. User.all — User::ActiveRecord_Relation, поддерживает length. Проверены find, find_by, find_by_name, first, create, destroy, присваивание с save, update, reload и изменение created_at на 1.year.ago. До введения валидаций и пустой новый пользователь, и сохранённый пользователь валидны. Унаследованные тесты web5: 7 tests, 27 assertions, 0 failures, 0 errors.
+
+## 6.2.2. Наличие значений
+
+Тесты сначала RED, затем GREEN. У пустого u ошибки Name can't be blank и Email can't be blank. u.errors.messages — Hash; ошибки email доступны через u.errors.messages[:email] или u.errors[:email]. Фактический вывод: 6.2.2-errors.txt.
